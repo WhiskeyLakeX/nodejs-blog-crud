@@ -1,0 +1,34 @@
+@mixin header-text {
+    color: red;
+    font-size: large;
+}
+
+@mixin body-text {
+    color: aquamarine;
+    font-size: medium;
+}
+
+@mixin footer-text {
+    color: yellow;
+    font-size: small;
+}
+
+@mixin custom-style($color, $fontSize) {
+    color: $color;
+    font-size: $fontSize;
+}
+
+.body-content-style {
+    @include body-text;
+    @include custom-style(blue, medium);
+}
+
+.header-content-style {
+    @include header-text;
+    @include custom-style(blue, large);
+}
+
+.all-style-button {
+    @extend .body-content-style;
+    @extend .header-content-style;
+}
