@@ -22,8 +22,9 @@
             <a
               href=""
               class="btn btn-link"
-              data-bs-toggle="modal"
-              data-bs-target="#cfDeleteModal"
+              data-toggle="modal"
+              data-target="#cfDeleteModal"
+              data-whatever="{{this._id}}"
             >Xoá</a>
           </td>
         </tr>
@@ -35,45 +36,47 @@
 <!--Confirm delete courses-->
 <!-- Modal -->
 <!-- Button trigger modal -->
-<button
-  type="button"
-  class="btn btn-primary"
-  data-bs-popper="modal"
-  data-bs-target="#exampleModal"
->
-  Launch demo modal
-</button>
-
+<!-- Button trigger modal -->
 <!-- Modal -->
-<div
-  class="modal fade"
-  id="exampleModal"
-  tabindex="-1"
-  aria-labelledby="exampleModalLabel"
-  aria-hidden="true"
->
+<div class="modal fade" id="cfDeleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
+        <h5 class="modal-title" id="exampleModalLabel">Xác nhận xoá khoá học</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
       <div class="modal-body">
-        ...
+<!--        Xoá khoá học-->
       </div>
       <div class="modal-footer">
-        <button
-          type="button"
-          class="btn btn-secondary"
-          data-bs-dismiss="modal"
-        >Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button id="btn-delete-course" type="button" class="btn btn-danger">Xác nhận</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Huỷ</button>
+
       </div>
     </div>
   </div>
 </div>
+
+<form method="POST" name="delete-course-form">
+
+</form>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    let courseId;
+    const deleteForm = document.forms["delete-course-form"]
+    const btnDeleteCourse = document.getElementById("btn-delete-course");
+
+    $('#cfDeleteModal').on('show.bs.modal', function(event) {
+      const button = $(event.relatedTarget);
+      courseId = button.data('whatever');
+    })
+
+    btnDeleteCourse.onclick = function() {
+      deleteForm.action="/courses/" + courseId + '/?_method=DELETE';
+      deleteForm.submit();
+    }
+  })
+</script>
